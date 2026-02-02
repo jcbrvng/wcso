@@ -1,17 +1,68 @@
 ---
-
+import "../styles/global.css";
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Windy City Sports Outlet</title>
+  </head>
+
+  <body>
+    <div class="topbar"></div>
+
+    <section class="hero">
+      <h1>Windy City Sports Outlet</h1>
+      <p>Your one-stop shop for premium sporting goods in Chicago.</p>
+    </section>
+
+    <section class="about">
+      <div class="container">
+        <p>This will be your main intro text. We’ll refine this later.</p>
+
+        <div class="contact-row">
+          220 Messner Dr, Wheeling, IL 60090 &nbsp; ★ &nbsp; (847) 780-4094 &nbsp; ★ &nbsp; Email
+        </div>
+      </div>
+    </section>
+
+    <section class="hours">
+      <div class="container">
+        <div class="hours-grid">
+          <div class="photo-placeholder"></div>
+
+          <div>
+            <h2>OUR HOURS</h2>
+            <div>Monday — 9am–5pm</div>
+            <div>Tuesday — 9am–5pm</div>
+            <div>Wednesday — 9am–5pm</div>
+            <div>Thursday — 9am–5pm</div>
+            <div>Friday — 9am–5pm</div>
+            <div>Saturday — 9am–5pm</div>
+            <div>Sunday — 9am–5pm</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brands">
+      <div class="container">
+        <div class="brands-head">
+          <h2>BRANDS WE SELL</h2>
+          <span style="font-size:24px;">→</span>
+        </div>
+
+        <div class="brand-strip">
+          {Array.from({ length: 8 }).map(() => <div class="brand-box"></div>)}
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© 2026 Windy City Sports Outlet</div>
+      <div class="muted">Address / Phone / Email</div>
+    </footer>
+  </body>
 </html>
