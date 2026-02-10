@@ -1,68 +1,792 @@
 ---
-import "../styles/global.css";
+/**
+ * WCSO — Single Page
+ * - Marquee "GRAND OPENING" banner
+ * - Anchor nav (Hours / Brands / Visit / Contact)
+ * - Brands We Carry: category tabs + 3-col card grid + paging arrows
+ * - Interactive Google Maps embed
+ *
+ * Replace image placeholders (data-img="...") with your real <img> tags
+ * once you import assets.
+ */
+
+// Brands data (swap to your real brands + images)
+const BRANDS = {
+  "Pickleball/Padel": [
+    { name: "Paddletek", subtitle: "Performance Paddles", badge: "Performance Paddles", img: "brand-paddletek.jpg" },
+    { name: "Padeltek", subtitle: "Performance Rackets", badge: "Performance Rackets", img: "brand-padeltek.jpg" },
+    { name: "ProXR Pickleball", subtitle: "Innovative Paddles", badge: "Innovative Paddles", img: "brand-proxr.jpg" },
+    { name: "Example Brand 4", subtitle: "Accessory Line", badge: "Accessories", img: "brand-4.jpg" },
+    { name: "Example Brand 5", subtitle: "Apparel", badge: "Apparel", img: "brand-5.jpg" },
+    { name: "Example Brand 6", subtitle: "Bags", badge: "Bags", img: "brand-6.jpg" },
+    { name: "Example Brand 7", subtitle: "Balls", badge: "Balls", img: "brand-7.jpg" },
+  ],
+  Baseball: [
+    { name: "Example Baseball 1", subtitle: "Gloves", badge: "Gloves", img: "baseball-1.jpg" },
+    { name: "Example Baseball 2", subtitle: "Bats", badge: "Bats", img: "baseball-2.jpg" },
+    { name: "Example Baseball 3", subtitle: "Training", badge: "Training", img: "baseball-3.jpg" },
+  ],
+  "Sport Style": [
+    { name: "Example Style 1", subtitle: "Footwear", badge: "Footwear", img: "style-1.jpg" },
+    { name: "Example Style 2", subtitle: "Athleisure", badge: "Athleisure", img: "style-2.jpg" },
+    { name: "Example Style 3", subtitle: "Outerwear", badge: "Outerwear", img: "style-3.jpg" },
+  ],
+  Training: [
+    { name: "Example Training 1", subtitle: "Agility", badge: "Agility", img: "train-1.jpg" },
+    { name: "Example Training 2", subtitle: "Recovery", badge: "Recovery", img: "train-2.jpg" },
+    { name: "Example Training 3", subtitle: "Strength", badge: "Strength", img: "train-3.jpg" },
+  ],
+};
+
+const HOURS = [
+  ["Monday", "10 am–5 pm"],
+  ["Tuesday", "10 am–5 pm"],
+  ["Wednesday", "10 am–5 pm"],
+  ["Thursday", "10 am–5 pm"],
+  ["Friday", "10 am–5 pm"],
+  ["Saturday", "Closed"],
+  ["Sunday", "Closed"],
+];
+
+const ADDRESS_LINE = "220 Messner Dr, Wheeling, IL 60090";
+const PHONE = "(847)780-4094";
+const EMAIL = "windycitysports@35services.com";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Windy City Sports Outlet</title>
+
+    <style>
+      :root{
+        /* Tuned to match the PDF look */
+        --navy: #254c63;
+        --navy-2: #1f4054;
+        --red: #d72b2b;
+        --text: #0d0c11;
+        --muted: #5b6770;
+        --blue-title: #2b5d7b;
+        --bg: #ffffff;
+        --max: 1120px;
+      }
+
+      *{ box-sizing: border-box; }
+      html{ scroll-behavior: smooth; }
+      body{
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+      }
+      a{ color: inherit; text-decoration: none; }
+
+      /* Top slim navy bar (matches PDF) */
+      .topbar{
+        background: var(--navy);
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 1;
+        padding: 10px 14px;
+        text-align: center;
+      }
+
+      /* Red marquee banner */
+      .marquee{
+        background: var(--red);
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        overflow: hidden;
+        white-space: nowrap;
+        border-bottom: 1px solid rgba(255,255,255,.15);
+      }
+      .marquee__track{
+        display: inline-flex;
+        align-items: center;
+        gap: 22px;
+        padding: 10px 0;
+        will-change: transform;
+        animation: marquee 18s linear infinite;
+      }
+      .marquee__item{
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        padding-left: 14px;
+      }
+      .marquee__star{
+        font-size: 14px;
+        opacity: .95;
+      }
+      @keyframes marquee{
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+
+      /* Header / hero */
+      header{
+        background: #fff;
+      }
+      .header__inner{
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 18px 18px 12px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+      .logo{
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .logo__mark{
+        width: 140px;
+        height: 48px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        color: #111;
+        font-weight: 900;
+        letter-spacing: .02em;
+        /* Placeholder for your real logo */
+        background: linear-gradient(180deg, #fff, #f6f6f6);
+        border: 1px solid #e8e8e8;
+      }
+      nav{
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        padding-top: 10px;
+        font-weight: 600;
+        color: #111;
+      }
+      nav a{
+        font-size: 14px;
+      }
+      nav a:hover{
+        text-decoration: underline;
+        text-underline-offset: 6px;
+      }
+
+      .hero{
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 18px 10px;
+      }
+      .hero__img{
+        width: 100%;
+        height: 360px;
+        border-radius: 2px;
+        background: #e9ecef;
+        border: 1px solid #e6e6e6;
+        overflow: hidden;
+        position: relative;
+      }
+      /* Replace this with your real hero image */
+      .hero__img::after{
+        content: "HERO IMAGE PLACEHOLDER";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        letter-spacing: .08em;
+        color: rgba(0,0,0,.35);
+      }
+
+      /* One-stop shop section */
+      .oneStop{
+        padding: 54px 18px 22px;
+        text-align: center;
+      }
+      .stars{
+        color: var(--red);
+        font-size: 18px;
+        letter-spacing: 6px;
+        margin-bottom: 10px;
+      }
+      .h1{
+        margin: 0;
+        font-size: 44px;
+        line-height: 1.02;
+        letter-spacing: 0.02em;
+        font-weight: 900;
+        color: var(--blue-title);
+        text-transform: uppercase;
+      }
+      .subhead{
+        margin: 10px auto 18px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .body{
+        max-width: 840px;
+        margin: 0 auto;
+        color: #2b2b2b;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+      .body p{ margin: 0 0 14px; }
+
+      /* Hours band */
+      .hoursBand{
+        background: var(--navy);
+        color: #fff;
+        padding: 44px 18px;
+      }
+      .hoursBand__inner{
+        max-width: var(--max);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .hoursImg{
+        width: 100%;
+        height: 260px;
+        background: #163446;
+        border: 1px solid rgba(255,255,255,.12);
+        position: relative;
+        overflow: hidden;
+      }
+      .hoursImg::after{
+        content: "HOURS IMAGE PLACEHOLDER";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        letter-spacing: .08em;
+        color: rgba(255,255,255,.55);
+      }
+      .hoursTitle{
+        margin: 0 0 16px;
+        font-size: 20px;
+        font-weight: 800;
+      }
+      .hoursList{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+        max-width: 360px;
+      }
+      .hoursRow{
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 16px;
+        font-size: 13px;
+      }
+      .hoursRow span:last-child{ font-weight: 700; }
+
+      /* Brands section */
+      .brands{
+        padding: 40px 18px 10px;
+      }
+      .brands__inner{
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+      .brandsTop{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+      .brandsTitle{
+        margin: 0;
+        color: var(--red);
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .tabs{
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #111;
+      }
+      .tab{
+        padding: 6px 2px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        color: inherit;
+        border-bottom: 2px solid transparent;
+      }
+      .tab[aria-selected="true"]{
+        border-bottom-color: #111;
+      }
+
+      .cardsShell{
+        position: relative;
+        padding-right: 34px; /* room for right arrow like the mock */
+      }
+      .cardsGrid{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        min-height: 340px; /* keeps layout stable while paging */
+      }
+      .card{
+        background: #f1f3f5;
+        border: 1px solid #e6e6e6;
+        height: 320px;
+        position: relative;
+        overflow: hidden;
+      }
+      .card__img{
+        position: absolute;
+        inset: 0;
+        background: #dfe5ea;
+      }
+      .card__img::after{
+        content: attr(data-img);
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        letter-spacing: .06em;
+        color: rgba(0,0,0,.35);
+        padding: 12px;
+        text-align: center;
+      }
+
+      /* dark gradient overlay bottom */
+      .card__overlay{
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        padding: 16px 14px 14px;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.56) 55%, rgba(0,0,0,.72) 100%);
+        color: #fff;
+      }
+      .card__name{
+        font-weight: 900;
+        font-size: 14px;
+        margin: 0 0 8px;
+      }
+      .card__badge{
+        display: inline-block;
+        background: var(--red);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 3px;
+      }
+
+      .pager{
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        display: grid;
+        gap: 10px;
+      }
+      .pager button{
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        border: 1px solid #d7d7d7;
+        background: #fff;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .pager button:disabled{
+        opacity: .35;
+        cursor: not-allowed;
+      }
+
+      /* Visit section */
+      .visit{
+        padding: 26px 18px 0;
+      }
+      .visit__inner{
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+      .visitTitle{
+        margin: 0 0 8px;
+        color: var(--red);
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .visitAddr{
+        margin: 0 0 14px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #111;
+      }
+      .map{
+        width: 100%;
+        height: 320px;
+        border: 1px solid #e6e6e6;
+        overflow: hidden;
+        background: #eef2f5;
+      }
+      .map iframe{
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      /* Contact section */
+      .contact{
+        padding: 44px 18px 20px;
+        text-align: center;
+      }
+      .contactTitle{
+        margin: 0 0 8px;
+        color: var(--red);
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .contact p{
+        margin: 6px 0;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .fb{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        margin-top: 10px;
+        font-weight: 900;
+        background: #111;
+        color: #fff;
+      }
+
+      /* Footer */
+      footer{
+        background: var(--navy);
+        color: #fff;
+        padding: 44px 18px 28px;
+        text-align: center;
+      }
+      .footerLogo{
+        width: 170px;
+        height: 58px;
+        margin: 0 auto 12px;
+        border-radius: 6px;
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.12);
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        letter-spacing: .08em;
+      }
+      .fine{
+        font-size: 11px;
+        opacity: .9;
+        line-height: 1.6;
+      }
+
+      /* Responsive tweaks */
+      @media (max-width: 920px){
+        .hero__img{ height: 300px; }
+        .hoursBand__inner{ grid-template-columns: 1fr; }
+        .cardsGrid{ grid-template-columns: 1fr; }
+        .cardsShell{ padding-right: 0; }
+        .pager{
+          position: static;
+          transform: none;
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 12px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce){
+        html{ scroll-behavior: auto; }
+        .marquee__track{ animation: none; }
+      }
+    </style>
   </head>
 
   <body>
-    <div class="topbar"></div>
+    <!-- Top navy strip -->
+    <div class="topbar">
+      OUR PROS ARE HERE TO HELP YOU FIND THE RIGHT PICKLEBALL, PADEL, AND BASEBALL EQUIPMENT
+    </div>
 
-    <section class="hero">
-      <h1>Windy City Sports Outlet</h1>
-      <p>Your one-stop shop for premium sporting goods in Chicago.</p>
-    </section>
+    <!-- Marquee red strip -->
+    <div class="marquee" aria-label="Grand opening banner">
+      <!-- Two identical tracks so it loops seamlessly -->
+      <div class="marquee__track" aria-hidden="true">
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
 
-    <section class="about">
-      <div class="container">
-        <p>This will be your main intro text. We’ll refine this later.</p>
-
-        <div class="contact-row">
-          220 Messner Dr, Wheeling, IL 60090 &nbsp; ★ &nbsp; (847) 780-4094 &nbsp; ★ &nbsp; Email
-        </div>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
+        <span class="marquee__item">GRAND OPENING 2/16 <span class="marquee__star">✶</span></span>
       </div>
-    </section>
+    </div>
 
-    <section class="hours">
-      <div class="container">
-        <div class="hours-grid">
-          <div class="photo-placeholder"></div>
+    <header>
+      <div class="header__inner">
+        <a class="logo" href="#top" aria-label="Windy City Sports Outlet home">
+          <div class="logo__mark">LOGO</div>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <a href="#hours">Hours</a>
+          <a href="#brands">Brands</a>
+          <a href="#visit">Visit</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+
+      <div class="hero" id="top">
+        <div class="hero__img" role="img" aria-label="Store hero image placeholder"></div>
+      </div>
+    </header>
+
+    <main>
+      <!-- One Stop Shop -->
+      <section class="oneStop" aria-label="Intro">
+        <div class="stars">★★★</div>
+        <h1 class="h1">YOUR ONE-STOP SHOP</h1>
+        <div class="subhead">Find the High-Quality Equipment That Is Right for You</div>
+
+        <div class="body">
+          <p>
+            We specialize in pickleball, padel, and baseball gear, along with a wide selection of equipment and apparel
+            for athletes of all ages. Whether you’re a beginner or a seasoned player, our friendly team will help you find
+            the right gear to elevate your game.
+          </p>
+          <p>
+            Our sporting goods showroom features paddles, rackets, gloves, bats, footwear, bags, and accessories. We
+            also offer an indoor test court and a custom shop where you can build personalized or branded pickle ball
+            equipment for charity or corporate functions.
+          </p>
+          <p>
+            We’ve got everything you need under one roof. Stop by today and gear up with the best at Windy City
+            Sports Outlet!
+          </p>
+        </div>
+      </section>
+
+      <!-- Hours band -->
+      <section id="hours" class="hoursBand" aria-label="Our Hours">
+        <div class="hoursBand__inner">
+          <div class="hoursImg" role="img" aria-label="Hours image placeholder"></div>
 
           <div>
-            <h2>OUR HOURS</h2>
-            <div>Monday — 9am–5pm</div>
-            <div>Tuesday — 9am–5pm</div>
-            <div>Wednesday — 9am–5pm</div>
-            <div>Thursday — 9am–5pm</div>
-            <div>Friday — 9am–5pm</div>
-            <div>Saturday — 9am–5pm</div>
-            <div>Sunday — 9am–5pm</div>
+            <h2 class="hoursTitle">Our Hours</h2>
+            <ul class="hoursList">
+              {HOURS.map(([day, hours]) => (
+                <li class="hoursRow">
+                  <span>{day}</span>
+                  <span>{hours}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="brands">
-      <div class="container">
-        <div class="brands-head">
-          <h2>BRANDS WE SELL</h2>
-          <span style="font-size:24px;">→</span>
+      <!-- Brands -->
+      <section id="brands" class="brands" aria-label="Brands We Carry">
+        <div class="brands__inner">
+          <div class="brandsTop">
+            <h2 class="brandsTitle">Brands We Carry</h2>
+
+            <div class="tabs" role="tablist" aria-label="Brand categories">
+              {Object.keys(BRANDS).map((key, idx) => (
+                <button
+                  class="tab"
+                  type="button"
+                  role="tab"
+                  aria-selected={idx === 0 ? "true" : "false"}
+                  data-tab={key}
+                >
+                  {key}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div class="cardsShell">
+            <div class="cardsGrid" id="brand-grid" aria-live="polite"></div>
+
+            <div class="pager" aria-label="Brand paging controls">
+              <button id="brands-prev" type="button" aria-label="Previous page">‹</button>
+              <button id="brands-next" type="button" aria-label="Next page">›</button>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="brand-strip">
-          {Array.from({ length: 8 }).map(() => <div class="brand-box"></div>)}
+      <!-- Visit -->
+      <section id="visit" class="visit" aria-label="Visit">
+        <div class="visit__inner">
+          <h2 class="visitTitle">Visit</h2>
+          <p class="visitAddr">{ADDRESS_LINE}</p>
+
+          <div class="map" role="application" aria-label="Interactive map">
+            <!-- No API key required for this embed-style map -->
+            <iframe
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(ADDRESS_LINE)}&output=embed`}
+              title="Windy City Sports Outlet Map"
+            ></iframe>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <footer class="footer">
-      <div>© 2026 Windy City Sports Outlet</div>
-      <div class="muted">Address / Phone / Email</div>
+      <!-- Contact -->
+      <section id="contact" class="contact" aria-label="Contact">
+        <h2 class="contactTitle">Contact</h2>
+        <p>{PHONE}</p>
+        <p>{EMAIL}</p>
+
+        <!-- Replace href with your real Facebook URL -->
+        <a class="fb" href="#" aria-label="Facebook link">f</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footerLogo">WCSO</div>
+      <div class="fine">
+        © 2026 Windy City Sports Outlet<br/>
+        {ADDRESS_LINE} &nbsp;|&nbsp; {PHONE} &nbsp;|&nbsp; {EMAIL}
+      </div>
     </footer>
+
+    <script>
+      // --- Brands tabs + paging (3 columns like mock, with arrows if more) ---
+      const BRANDS = JSON.parse(document.getElementById("brands-data")?.textContent || "null") || null;
+    </script>
+
+    <script>
+      // Inline data + UI logic (kept in this file by request)
+      const brandData = {
+        "Pickleball/Padel": [
+          { name: "Paddletek", badge: "Performance Paddles", img: "brand-paddletek.jpg" },
+          { name: "Padeltek", badge: "Performance Rackets", img: "brand-padeltek.jpg" },
+          { name: "ProXR Pickleball", badge: "Innovative Paddles", img: "brand-proxr.jpg" },
+          { name: "Example Brand 4", badge: "Accessories", img: "brand-4.jpg" },
+          { name: "Example Brand 5", badge: "Apparel", img: "brand-5.jpg" },
+          { name: "Example Brand 6", badge: "Bags", img: "brand-6.jpg" },
+          { name: "Example Brand 7", badge: "Balls", img: "brand-7.jpg" },
+        ],
+        Baseball: [
+          { name: "Example Baseball 1", badge: "Gloves", img: "baseball-1.jpg" },
+          { name: "Example Baseball 2", badge: "Bats", img: "baseball-2.jpg" },
+          { name: "Example Baseball 3", badge: "Training", img: "baseball-3.jpg" },
+        ],
+        "Sport Style": [
+          { name: "Example Style 1", badge: "Footwear", img: "style-1.jpg" },
+          { name: "Example Style 2", badge: "Athleisure", img: "style-2.jpg" },
+          { name: "Example Style 3", badge: "Outerwear", img: "style-3.jpg" },
+        ],
+        Training: [
+          { name: "Example Training 1", badge: "Agility", img: "train-1.jpg" },
+          { name: "Example Training 2", badge: "Recovery", img: "train-2.jpg" },
+          { name: "Example Training 3", badge: "Strength", img: "train-3.jpg" },
+        ],
+      };
+
+      const PAGE_SIZE = 3; // 3 cards visible (single row) like your mock
+      // If you want 2 rows of 3 (6 per page), set PAGE_SIZE = 6 and it will still page.
+
+      const grid = document.getElementById("brand-grid");
+      const tabs = Array.from(document.querySelectorAll(".tab"));
+      const prevBtn = document.getElementById("brands-prev");
+      const nextBtn = document.getElementById("brands-next");
+
+      let activeCategory = tabs[0]?.dataset.tab || "Pickleball/Padel";
+      let page = 0;
+
+      function setTabSelected(category){
+        tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.tab === category)));
+      }
+
+      function render(){
+        const items = brandData[activeCategory] || [];
+        const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+        page = Math.min(page, totalPages - 1);
+
+        const start = page * PAGE_SIZE;
+        const slice = items.slice(start, start + PAGE_SIZE);
+
+        // Clear
+        grid.innerHTML = "";
+
+        // Render 3 columns
+        slice.forEach(item => {
+          const card = document.createElement("article");
+          card.className = "card";
+
+          const img = document.createElement("div");
+          img.className = "card__img";
+          img.setAttribute("data-img", item.img + " (replace with real image)");
+
+          const overlay = document.createElement("div");
+          overlay.className = "card__overlay";
+
+          const name = document.createElement("p");
+          name.className = "card__name";
+          name.textContent = item.name;
+
+          const badge = document.createElement("span");
+          badge.className = "card__badge";
+          badge.textContent = item.badge;
+
+          overlay.appendChild(name);
+          overlay.appendChild(badge);
+          card.appendChild(img);
+          card.appendChild(overlay);
+          grid.appendChild(card);
+        });
+
+        prevBtn.disabled = page <= 0;
+        nextBtn.disabled = page >= totalPages - 1;
+      }
+
+      tabs.forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeCategory = btn.dataset.tab;
+          page = 0;
+          setTabSelected(activeCategory);
+          render();
+        });
+      });
+
+      prevBtn.addEventListener("click", () => { page = Math.max(0, page - 1); render(); });
+      nextBtn.addEventListener("click", () => { page = page + 1; render(); });
+
+      // Initial render
+      setTabSelected(activeCategory);
+      render();
+    </script>
   </body>
 </html>
