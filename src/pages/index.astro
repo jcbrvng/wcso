@@ -1,11 +1,5 @@
 ---
-/**
- * WCSO — Single Page (Updated)
- * - All image placeholders are <img> with src="" for easy paste-in.
- * - Marquee loops seamlessly + slowed down.
- * - Hero is full-bleed (edge-to-edge).
- * - "Stars" are image placeholders (not text symbols).
- */
+
 
  const BRANDS = {
   "Pickleball/Padel": [
@@ -52,21 +46,20 @@ const EMAIL = "windycitysports@35services.com";
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://use.typekit.net/vra0lhe.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Windy City Sports Outlet</title>
 
     <style>
       :root{
-        --navy: #254c63;
-        --red: #d72b2b;
-        --text: #0d0c11;
-        --blue-title: #2b5d7b;
+        --navy: #1F4968;
+        --red: #EA1313;
+        --light-blue: #B5E3F3;
         --bg: #ffffff;
         --max: 1120px;
 
-        /* Marquee speed: increase duration = slower */
-        --marquee-duration: 32s;
+        --marquee-duration: 30s;
       }
 
       *{ box-sizing: border-box; }
@@ -74,7 +67,7 @@ const EMAIL = "windycitysports@35services.com";
       body{
         margin: 0;
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-        color: var(--text);
+        color: #000;
         background: var(--bg);
       }
       a{ color: inherit; text-decoration: none; }
@@ -82,29 +75,32 @@ const EMAIL = "windycitysports@35services.com";
       /* Top slim navy bar */
       .topbar{
         background: var(--navy);
-        color: #fff;
+        color: var(--light-blue);
         text-transform: uppercase;
         letter-spacing: 0.06em;
-        font-weight: 700;
         font-size: 12px;
         line-height: 1;
-        padding: 10px 14px;
+        padding: 10px 12px;
         text-align: center;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
       }
 
       /* Red marquee banner (seamless loop) */
       .marquee{
         background: var(--red);
         color: #fff;
-        font-weight: 800;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         overflow: hidden;
         white-space: nowrap;
-        border-bottom: 1px solid rgba(255,255,255,.15);
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 12px;
       }
       .marquee__viewport{
-        /* mask edges slightly to make loop feel softer */
         position: relative;
       }
       .marquee__viewport::before,
@@ -118,11 +114,11 @@ const EMAIL = "windycitysports@35services.com";
       }
       .marquee__viewport::before{
         left:0;
-        background: linear-gradient(90deg, rgba(215,43,43,1) 0%, rgba(215,43,43,0) 100%);
+        background: linear-gradient(90deg, rgba(234,19,19,1) 0%, rgba(215,43,43,0) 100%);
       }
       .marquee__viewport::after{
         right:0;
-        background: linear-gradient(270deg, rgba(215,43,43,1) 0%, rgba(215,43,43,0) 100%);
+        background: linear-gradient(270deg, rgba(234,19,43,1) 0%, rgba(215,43,43,0) 100%);
       }
 
       .marquee__track{
@@ -142,16 +138,14 @@ const EMAIL = "windycitysports@35services.com";
       .marquee__item{
         display: inline-flex;
         align-items: center;
-        padding: 10px 18px;
+        padding: 10px 12px;
       }
 
       .marquee__starImg{
         width: 14px;
         height: 14px;
-        margin-left: 14px;
         object-fit: contain;
         display: inline-block;
-        /* If you leave src blank, it will not render—fine for initial */
       }
 
       @keyframes marquee{
@@ -188,32 +182,30 @@ const EMAIL = "windycitysports@35services.com";
         align-items: center;
         gap: 26px;
         padding-top: 10px;
-        font-weight: 600;
-        color: #111;
+        color: #000;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
-      nav a{ font-size: 14px; }
+      nav a{ font-size: 18px; }
       nav a:hover{
         text-decoration: underline;
         text-underline-offset: 6px;
       }
 
-      /* HERO full-bleed */
       .heroFullBleed{
         width: 100%;
       }
       .heroImg{
         width: 100%;
-        height: 360px;
+        height: 600px;
         display: block;
         object-fit: cover;
-        background: #e9ecef;
-        border-top: 1px solid #e6e6e6;
-        border-bottom: 1px solid #e6e6e6;
       }
 
       /* One-stop shop section */
       .oneStop{
-        padding: 54px 18px 22px;
+        padding: 80px 18px 22px;
         text-align: center;
       }
       .starsWrap{
@@ -223,7 +215,7 @@ const EMAIL = "windycitysports@35services.com";
         margin-bottom: 10px;
       }
       .starsImg{
-        width: 96px;   /* adjust to match your asset */
+        width: 96px;
         height: auto;
         display: block;
       }
@@ -233,29 +225,37 @@ const EMAIL = "windycitysports@35services.com";
         font-size: 44px;
         line-height: 1.02;
         letter-spacing: 0.02em;
-        font-weight: 900;
-        color: var(--blue-title);
+        color: var(--navy);
         text-transform: uppercase;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
       }
       .subhead{
         margin: 10px auto 18px;
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 28px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
       .body{
         max-width: 840px;
         margin: 0 auto;
-        color: #2b2b2b;
-        font-size: 14px;
+        color: #000;
+        font-size: 18px;
         line-height: 1.55;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        text-align: left;
+        padding: 40px;
       }
       .body p{ margin: 0 0 14px; }
 
-      /* Hours band */
       .hoursBand{
         background: var(--navy);
         color: #fff;
-        padding: 44px 18px;
+        padding: 80px 18px;
       }
       .hoursBand__inner{
         max-width: var(--max);
@@ -266,17 +266,19 @@ const EMAIL = "windycitysports@35services.com";
         align-items: center;
       }
       .hoursImg{
-        width: 100%;
-        height: 260px;
+        width: 80%;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
         display: block;
-        background: #163446;
-        border: 1px solid rgba(255,255,255,.12);
+        background: var(--navy);
       }
       .hoursTitle{
         margin: 0 0 16px;
-        font-size: 20px;
-        font-weight: 800;
+        font-size: 28px;
+        color: var(--light-blue);
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
       }
       .hoursList{
         margin: 0;
@@ -289,13 +291,16 @@ const EMAIL = "windycitysports@35services.com";
       .hoursRow{
         display: grid;
         grid-template-columns: 1fr auto;
-        gap: 16px;
-        font-size: 13px;
+        gap: 1px;
+        font-size: 18px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
-      .hoursRow span:last-child{ font-weight: 700; }
+
 
       /* Brands section */
-      .brands{ padding: 40px 18px 10px; }
+      .brands{ padding: 80px 18px 10px; }
       .brands__inner{ max-width: var(--max); margin: 0 auto; }
       .brandsTop{
         display: flex;
@@ -307,16 +312,20 @@ const EMAIL = "windycitysports@35services.com";
       .brandsTitle{
         margin: 0;
         color: var(--red);
-        font-size: 18px;
-        font-weight: 900;
+        font-size: 28px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
       }
       .tabs{
         display: flex;
         align-items: center;
         gap: 18px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #111;
+        font-size: 18px;
+        color: #000;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
       .tab{
         padding: 6px 2px;
@@ -327,31 +336,34 @@ const EMAIL = "windycitysports@35services.com";
         color: inherit;
         border-bottom: 2px solid transparent;
       }
-      .tab[aria-selected="true"]{ border-bottom-color: #111; }
+      .tab[aria-selected="true"]{ border-bottom-color: #000; }
 
       .cardsShell{
         position: relative;
-        padding-right: 34px;
+        padding-right: 0px;
+        max-width: var(--max);
+        margin: 0 auto;
+        overflow: hidden;
       }
       .cardsGrid{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-auto-flow: column;
+        grid-auto-columns: calc((100% - 36px) / 3);
         gap: 18px;
-        min-height: 340px;
+        width: 100%;
       }
       .card{
-        background: #f1f3f5;
-        border: 1px solid #e6e6e6;
-        height: 320px;
+        width: 100%;
+        aspect-ratio: 4/5;
         position: relative;
         overflow: hidden;
+        flex-direction: column;
       }
       .card__img{
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
-        background: #dfe5ea;
       }
       .card__overlay{
         position: absolute;
@@ -361,20 +373,24 @@ const EMAIL = "windycitysports@35services.com";
         color: #fff;
       }
       .card__name{
-        font-weight: 900;
         font-size: 14px;
         margin: 0 0 8px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
       .card__badge{
         display: inline-block;
         background: var(--red);
         color: #fff;
         font-size: 10px;
-        font-weight: 900;
         letter-spacing: .06em;
         text-transform: uppercase;
         padding: 4px 8px;
         border-radius: 3px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
 
       .pager{
@@ -388,63 +404,69 @@ const EMAIL = "windycitysports@35services.com";
       .pager button{
         width: 28px;
         height: 28px;
-        border-radius: 999px;
-        border: 1px solid #d7d7d7;
         background: #fff;
         cursor: pointer;
         display: grid;
         place-items: center;
-        font-weight: 900;
         line-height: 1;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
       .pager button:disabled{ opacity: .35; cursor: not-allowed; }
 
       /* Visit section */
-      .visit{ padding: 26px 18px 0; }
+      .visit{ padding: 80px 18px 0; }
       .visit__inner{ max-width: var(--max); margin: 0 auto; }
       .visitTitle{
         margin: 0 0 8px;
         color: var(--red);
-        font-size: 18px;
-        font-weight: 900;
+        font-size: 28px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
       }
       .visitAddr{
         margin: 0 0 14px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #111;
+        font-size: 18px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
       .map{
         width: 100%;
-        height: 320px;
-        border: 1px solid #e6e6e6;
+        height: 500px;
         overflow: hidden;
-        background: #eef2f5;
+        background: #fff;
       }
       .map iframe{ width: 100%; height: 100%; border: 0; }
 
       /* Contact section */
       .contact{
-        padding: 44px 18px 20px;
+        padding: 80px 18px;
         text-align: center;
       }
       .contactTitle{
         margin: 0 0 8px;
         color: var(--red);
-        font-size: 18px;
-        font-weight: 900;
+        font-size: 28px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 700;
+        font-style: normal;
       }
       .contact p{
         margin: 6px 0;
-        font-size: 12px;
-        font-weight: 700;
+        font-size: 18px;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
 
       .fbIcon{
         width: 26px;
         height: 26px;
         display: inline-block;
-        margin-top: 10px;
+        margin-top: 6px;
         object-fit: contain;
       }
 
@@ -454,6 +476,9 @@ const EMAIL = "windycitysports@35services.com";
         color: #fff;
         padding: 44px 18px 28px;
         text-align: center;
+        font-family: "futura-pt", sans-serif;
+        font-weight: 400;
+        font-style: normal;
       }
       .footerLogoImg{
         width: 170px;
@@ -467,12 +492,20 @@ const EMAIL = "windycitysports@35services.com";
         line-height: 1.6;
       }
 
+      .marquee__item,
+      .marquee__starImg {
+        display: inline-block;
+        margin-right: 40px;
+        vertical-align: middle;
+      }
+
+
       /* Responsive */
       @media (max-width: 920px){
         .heroImg{ height: 300px; }
         .hoursBand__inner{ grid-template-columns: 1fr; }
         .cardsGrid{ grid-template-columns: 1fr; }
-        .cardsShell{ padding-right: 0; }
+        .cardsShell{ padding-right: 0px; }
         .pager{
           position: static;
           transform: none;
@@ -496,35 +529,34 @@ const EMAIL = "windycitysports@35services.com";
 
     <!-- Marquee (two identical groups, animates -50% for seamless loop) -->
     <div class="marquee" aria-label="Grand opening banner">
-      <div class="marquee__viewport">
-        <div class="marquee__track" aria-hidden="true">
-          <div class="marquee__group">
-            {Array.from({ length: 10 }).map(() => (
-              <span class="marquee__item">
-                GRAND OPENING 2/16
-                <!-- Star image placeholder -->
-                <img class="marquee__starImg" src="" alt="Decorative star" />
-              </span>
-            ))}
-          </div>
+  <div class="marquee__viewport">
+    <div class="marquee__track" aria-hidden="true">
+      <div class="marquee__group">
+        {Array.from({ length: 10 }).map(() => (
+          <>
+            <span class="marquee__item">Grand Opening 2/16</span>
+            <img class="marquee__starImg" src="/white-star.svg" alt="white six-point star" />
+          </>
+        ))}
+      </div>
 
-          <div class="marquee__group" aria-hidden="true">
-            {Array.from({ length: 10 }).map(() => (
-              <span class="marquee__item">
-                GRAND OPENING 2/16
-                <img class="marquee__starImg" src="" alt="Decorative star" />
-              </span>
-            ))}
-          </div>
-        </div>
+      <div class="marquee__group" aria-hidden="true">
+        {Array.from({ length: 10 }).map(() => (
+          <>
+            <span class="marquee__item">Grand Opening 2/16</span>
+            <img class="marquee__starImg" src="/white-star.svg" alt="white six-point star" />
+          </>
+        ))}
       </div>
     </div>
+  </div>
+</div>
+
 
     <header>
       <div class="header__inner">
         <a class="logoLink" href="#top" aria-label="Windy City Sports Outlet home">
-          <!-- LOGO IMAGE PLACEHOLDER -->
-          <img class="logoImg" src="" alt="Windy City Sports Outlet logo" />
+          <img class="logoImg" src="/wcso_primary-logo_color-black.png" alt="Windy City Sports Outlet logo" />
         </a>
 
         <nav aria-label="Primary navigation">
@@ -535,17 +567,15 @@ const EMAIL = "windycitysports@35services.com";
         </nav>
       </div>
 
-      <!-- Full-bleed hero -->
       <div class="heroFullBleed" id="top">
-        <img class="heroImg" src="" alt="Store hero image" />
+        <img class="heroImg" src="/wcso_hero-banner.jpg" alt="interior of Windy City Sports Outlet store" />
       </div>
     </header>
 
     <main>
       <section class="oneStop" aria-label="Intro">
         <div class="starsWrap">
-          <!-- STARS IMAGE PLACEHOLDER -->
-          <img class="starsImg" src="" alt="Decorative stars" />
+          <img class="starsImg" src="/red-star_cluster.svg" alt="three red six-point stars" />
         </div>
 
         <h1 class="h1">YOUR ONE-STOP SHOP</h1>
@@ -571,8 +601,7 @@ const EMAIL = "windycitysports@35services.com";
 
       <section id="hours" class="hoursBand" aria-label="Our Hours">
         <div class="hoursBand__inner">
-          <!-- HOURS IMAGE PLACEHOLDER -->
-          <img class="hoursImg" src="" alt="Store interior or hours-related image" />
+          <img class="hoursImg" src="/wcso_cropped-image.jpg" alt="Chicago Slice merchandise in Windy City Sports Outlet store" />
 
           <div>
             <h2 class="hoursTitle">Our Hours</h2>
@@ -639,17 +668,15 @@ const EMAIL = "windycitysports@35services.com";
         <h2 class="contactTitle">Contact</h2>
         <p>{PHONE}</p>
         <p>{EMAIL}</p>
-
-        <!-- FACEBOOK ICON PLACEHOLDER (or swap for your own SVG/img) -->
+      
         <a href="#" aria-label="Facebook link">
-          <img class="fbIcon" src="" alt="Facebook icon" />
+          <img class="fbIcon" src="/facebook_primary-logo.svg" alt="Facebook primary logo" />
         </a>
       </section>
     </main>
 
     <footer>
-      <!-- FOOTER LOGO IMAGE PLACEHOLDER -->
-      <img class="footerLogoImg" src="" alt="Windy City Sports Outlet logo" />
+      <img class="footerLogoImg" src="/wcso_secondary-logo_color-white.png" alt="Windy City Sports Outlet logo" />
 
       <div class="fine">
         © 2026 Windy City Sports Outlet<br/>
@@ -661,9 +688,9 @@ const EMAIL = "windycitysports@35services.com";
       // --- Brands tabs + paging (3 columns + arrows when more) ---
       const brandData = {
         "Pickleball/Padel": [
-          { name: "Paddletek", badge: "Performance Paddles", img: "" },
-          { name: "Padeltek", badge: "Performance Rackets", img: "" },
-          { name: "ProXR Pickleball", badge: "Innovative Paddles", img: "" },
+          { name: "Paddletek", badge: "Performance Paddles", img: "/paddletek_card.jpg" },
+          { name: "Padeltek", badge: "Performance Rackets", img: "/padeltek_card.jpg" },
+          { name: "ProXR Pickleball", badge: "Innovative Paddles", img: "/proxr-pickleball_card.jpg" },
           { name: "Example Brand 4", badge: "Accessories", img: "" },
           { name: "Example Brand 5", badge: "Apparel", img: "" },
           { name: "Example Brand 6", badge: "Bags", img: "" },
