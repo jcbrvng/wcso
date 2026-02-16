@@ -4,7 +4,6 @@
    Notes:
    - Self-contained (CSS + JS in this file).
    - Styles are global because brand cards are injected via JS.
-   - Put images in /public and update the src paths below.
    ========================================== */
 
    const BRANDS = {
@@ -56,6 +55,8 @@ const EMAIL = "windycitysports@35services.com";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Windy City Sports Outlet</title>
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.svg" type="image/x-icon" />
 
     <style is:global>
       :root{
@@ -83,7 +84,6 @@ const EMAIL = "windycitysports@35services.com";
       }
       a{ color: inherit; text-decoration: none; }
 
-      /* Top slim navy bar */
       .topbar{
         background: var(--navy);
         color: var(--light-blue);
@@ -97,7 +97,6 @@ const EMAIL = "windycitysports@35services.com";
         font-weight: 700;
       }
 
-      /* Red marquee banner (seamless) */
       .marquee{
         background: var(--red);
         color: #fff;
@@ -154,7 +153,6 @@ const EMAIL = "windycitysports@35services.com";
         to   { transform: translateX(-50%); }
       }
 
-      /* Header */
       header{ background: #fff; }
       .header__inner{
         max-width: var(--max);
@@ -183,7 +181,6 @@ const EMAIL = "windycitysports@35services.com";
         text-underline-offset: 6px;
       }
 
-      /* Hero */
       .heroFullBleed{ width: 100%; }
       .heroImg{
         width: 100%;
@@ -192,7 +189,6 @@ const EMAIL = "windycitysports@35services.com";
         object-fit: cover;
       }
 
-      /* Intro section */
       .oneStop{
         padding: 80px 18px 22px;
         text-align: center;
@@ -235,7 +231,6 @@ const EMAIL = "windycitysports@35services.com";
       }
       .body p{ margin: 0 0 14px; }
 
-      /* Hours band */
       .hoursBand{
         background: var(--navy);
         color: #fff;
@@ -441,7 +436,7 @@ const EMAIL = "windycitysports@35services.com";
 
       /* Cards without a badge */
       .card__content:not(:has(.card__badge)) .card__link {
-        margin-top: 0px; /* smaller space when no badge */
+        margin-top: 0px;
       }
 
       .card__link {
@@ -501,7 +496,6 @@ const EMAIL = "windycitysports@35services.com";
         cursor: not-allowed;
       }
 
-      /* Visit section */
       .visit{ padding: 80px 18px 0; }
       .visit__inner{ max-width: var(--max); margin: 0 auto; }
       .visitTitle{
@@ -556,7 +550,7 @@ const EMAIL = "windycitysports@35services.com";
       .contact p a, 
       .fine a {
         text-decoration: none;
-        transition: text-decoration 0.2s ease; /* Smooths the transition slightly */
+        transition: text-decoration 0.2s ease;
       }
 
       /* Underline appears only on hover */
@@ -566,7 +560,6 @@ const EMAIL = "windycitysports@35services.com";
         text-underline-offset: 6px;
       }
 
-      /* Footer */
       footer{
         background: var(--navy);
         color: #fff;
@@ -593,7 +586,6 @@ const EMAIL = "windycitysports@35services.com";
         .heroImg{ height: 300px; }
         .hoursBand__inner{ grid-template-columns: 1fr; }
 
-        /* Header stack */
         .header__inner{
           flex-direction: column;
           align-items: center;
@@ -610,7 +602,6 @@ const EMAIL = "windycitysports@35services.com";
           max-width: 100%;
         }
 
-        /* Brands header stack + wrap tabs */
         .brandsTop{
           flex-direction: column;
           align-items: flex-start;
@@ -625,7 +616,6 @@ const EMAIL = "windycitysports@35services.com";
         }
         .tab{ padding-bottom: 6px; }
 
-        /* Mobile carousel sizing */
         .cardsScroller{
           gap: var(--brands-gap-mobile);
         }
@@ -633,7 +623,6 @@ const EMAIL = "windycitysports@35services.com";
           flex: 0 0 78%;
         }
 
-        /* Keep arrows slightly inset so they don't clip */
         .pager{
           left: -10px;
           right: -10px;
@@ -763,9 +752,7 @@ const EMAIL = "windycitysports@35services.com";
           </div>
 
           <div class="cardsRail">
-            <!-- Viewport clips the hidden cards on desktop -->
             <div class="cardsViewport">
-              <!-- Scroller is what you swipe/scroll; JS also scrolls it 1 card at a time -->
               <div class="cardsScroller" id="brand-scroller" aria-live="polite"></div>
             </div>
 
@@ -909,7 +896,6 @@ const EMAIL = "windycitysports@35services.com";
             badge.textContent = item.badge;
             content.appendChild(badge);
           } else {
-            // Add placeholder so title aligns with where badge would be
             const placeholder = document.createElement("span");
             placeholder.className = "card__badge-placeholder";
             content.appendChild(placeholder);
@@ -921,8 +907,6 @@ const EMAIL = "windycitysports@35services.com";
             link.href = item.url;
             link.target = "_blank";
             link.rel = "noopener";
-
-            // Show full URL without the protocol
             link.textContent = item.url.replace(/^https?:\/\/(www\.)?/, "");
 
             content.appendChild(link);
