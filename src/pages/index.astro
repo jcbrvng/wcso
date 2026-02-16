@@ -434,6 +434,16 @@ const EMAIL = "windycitysports@35services.com";
         display: none;
       }
 
+      /* Cards with a badge */
+      .card__badge + .card__link {
+        margin-top: 15px; /* space between badge and link */
+      }
+
+      /* Cards without a badge */
+      .card__content:not(:has(.card__badge)) .card__link {
+        margin-top: 0px; /* smaller space when no badge */
+      }
+
       .card__link {
         font-family: "futura-pt", sans-serif;
         font-weight: 500;
@@ -451,7 +461,7 @@ const EMAIL = "windycitysports@35services.com";
         opacity: 1;
       }
       .card:hover .card__content {
-        transform: translateY(-30px);/
+        transform: translateY(-30px);
       }
 
       .card__badge + .card__link {
@@ -575,20 +585,6 @@ const EMAIL = "windycitysports@35services.com";
         font-size: 11px;
         opacity: .9;
         line-height: 1.6;
-      }
-
-      .card__badge:empty {
-        display: none;
-      }
-
-      /* Cards with a badge */
-      .card__badge + .card__link {
-        margin-top: 15px; /* space between badge and link */
-      }
-
-      /* Cards without a badge */
-      .card__content:not(:has(.card__badge)) .card__link {
-        margin-top: 0px; /* smaller space when no badge */
       }
 
 
@@ -799,13 +795,15 @@ const EMAIL = "windycitysports@35services.com";
 
       <section id="contact" class="contact" aria-label="Contact">
         <h2 class="contactTitle">Contact</h2>
-        <p>{PHONE}</p>
+        <p>
+          <a href="tel:+18477804094">(847)780-4094</a>
+        </p>
         <p>
           <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
         </p>
 
         <div>
-          <a href="#" aria-label="Facebook link">
+          <a href="https://www.facebook.com/profile.php?id=61580947747096#" aria-label="Facebook link">
             <img class="fbIcon" src="/facebook_primary-logo.svg" alt="Facebook primary logo" />
           </a>
         </div>
@@ -816,11 +814,14 @@ const EMAIL = "windycitysports@35services.com";
       <img class="footerLogoImg" src="/wcso_secondary-logo_color-white.png" alt="Windy City Sports Outlet logo" />
       <div class="fine">
         © 2026 Windy City Sports Outlet<br/>
-        {ADDRESS_LINE} &nbsp;|&nbsp; {PHONE} &nbsp;|&nbsp; <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        {ADDRESS_LINE} &nbsp;|&nbsp; 
+        <a href="tel:+18477804094">{PHONE}</a> 
+        &nbsp;|&nbsp; 
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
       </div>
     </footer>
 
-    <script>
+    <script is:inline>
       const brandData = {
         "Pickleball/Padel": [
           { name: "Paddletek", badge: "Performance Paddles", img: "/paddletek_card.jpg", url: "https://paddletek.com" },
